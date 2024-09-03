@@ -7,6 +7,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import viewsets
 
 # Create your views here.
 
@@ -56,46 +57,51 @@ from rest_framework.response import Response
 
 # Serialzation Response and Request
 
-@api_view(['GET', 'POST'])
-def home(request):
+# @api_view(['GET', 'POST'])
+# def home(request):
         
-    """
-    List all code snippets, or create a new snippet.
-    """
-    if request.method == 'GET':
-        students = student.objects.all()  # Updated model name
-        serializer = studentSerializer(students, many=True)  # Updated serializer
-        return Response(serializer.data)
+#     """
+#     List all code snippets, or create a new snippet.
+#     """
+#     if request.method == 'GET':
+#         students = student.objects.all()  # Updated model name
+#         serializer = studentSerializer(students, many=True)  # Updated serializer
+#         return Response(serializer.data)
 
-    elif request.method == 'POST':
-        serializer = studentSerializer(data=request.data)  # Updated serializer
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     elif request.method == 'POST':
+#         serializer = studentSerializer(data=request.data)  # Updated serializer
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-@api_view(['GET', 'PUT', 'DELETE'])
-def student_detail(request, pk):
+# @api_view(['GET', 'PUT', 'DELETE'])
+# def student_detail(request, pk):
    
-    """
-    Retrieve, update or delete a code snippet.
-    """
-    try:
-        data = student.objects.get(pk=pk)  # Updated model name
-    except student.DoesNotExist:  # Updated model name
-        return Response(status=status.HTTP_404_NOT_FOUND)
+#     """
+#     Retrieve, update or delete a code snippet.
+#     """
+#     try:
+#         data = student.objects.get(pk=pk)  # Updated model name
+#     except student.DoesNotExist:  # Updated model name
+#         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    if request.method == 'GET':
-        serializer = studentSerializer(data)  # Updated serializer
-        return Response(serializer.data)
+#     if request.method == 'GET':
+#         serializer = studentSerializer(data)  # Updated serializer
+#         return Response(serializer.data)
 
-    elif request.method == 'PUT':
-        serializer = studentSerializer(data, data=request.data)  # Updated serializer
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     elif request.method == 'PUT':
+#         serializer = studentSerializer(data, data=request.data)  # Updated serializer
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    elif request.method == 'DELETE':
-        data.delete()  # Updated model name
-        return Response(status=status.HTTP_204_NO_CONTENT)
+#     elif request.method == 'DELETE':
+#         data.delete()  # Updated model name
+#         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class StudentViewSet(viewsets.ModelViewSet):
+    queryset= student.objects.all()
+    serializer_class = studentSerializer
