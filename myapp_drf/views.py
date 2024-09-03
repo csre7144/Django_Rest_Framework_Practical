@@ -102,6 +102,7 @@ from rest_framework import viewsets
 #         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+# ViewSet and Routers
 class StudentViewSet(viewsets.ModelViewSet):
     queryset= student.objects.all()
     serializer_class = studentSerializer

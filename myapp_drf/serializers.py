@@ -25,6 +25,7 @@ from .models import student
 # HyperlinkedModelSerializer and Routers ViewSet
 
 class studentSerializer(serializers.HyperlinkedModelSerializer):
+    id = serializers.ReadOnlyField()
     class Meta:
         model = student
         fields = '__all__'
